@@ -3,14 +3,18 @@
 class Auth_m extends MY_Model{
 	
 	public function __construct(){
-		$this->endpoint="/";
+		$this->endpoint="/auth/";
 	}
 
-  function getMember($id,$assoc=true,$raw=false){
-    return $this->get('member/'.$id,$assoc,$raw);
+  function getAuth($arr,$assoc=true,$raw=false){
+    return $this->get('auth',$arr,$assoc,$raw);
   }
 
-	function addUser($arr){
+  function getMember($arr,$assoc=true,$raw=false){
+    return $this->get('auth',$arr,$assoc,$raw);
+  }
+  
+  function addUser($arr){
 		return $this->post('member', $arr);
 	}
 
