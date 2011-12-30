@@ -9,7 +9,7 @@ class Auth extends CI_Controller {
 	public function index()
 	{
 		$this->load->model('auth_m', 'auth');
-		echo $this->auth->getMember($this->input->post('user_name'),true,true);
+		echo $this->auth->getMember(array('user_name'=>$this->input->post('user_name')),true,true);
 	}
 }
 
