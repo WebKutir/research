@@ -1,4 +1,4 @@
-RewriteEngine On
+# RewriteEngine On
 
 # Some hosts may require you to use the `RewriteBase` directive.
 # If you need to use the `RewriteBase` directive, it should be the
@@ -6,5 +6,5 @@ RewriteEngine On
 #
 # RewriteBase /
 
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^(.*)$ index.php [QSA,L]
+# RewriteCond %{REQUEST_FILENAME} !-f
+# RewriteRule ^(.*)$ index.php [QSA,L]
