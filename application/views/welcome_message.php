@@ -62,23 +62,33 @@
 		border: 1px solid #D0D0D0;
 		-webkit-box-shadow: 0 0 8px #D0D0D0;
 	}
+	#container #authWrap .login label.uid,
+	#container #authWrap .login label.pwd{
+		width: 120px;
+		display: inline-block;
+	}
+	#container #authWrap .login input[type="submit"]{
+		margin-left: 230px;
+	}
 	</style>
 </head>
 <body>
 
 <div id="container">
-	<h1>Welcome to CodeIgniter!</h1>
+	<h1 style="font-size: 30px; color: green;"><?php //for($i=0;$i<count($w_m); $i++) echo $w_m[$i]; echo "<br />"; for($i=0;$i<count($w_m2); $i++) echo $w_m2[$i]; ?></h1>
+	<h1>R&D on CodeIgniter,Slim and Doctrine</h1>
 
 	<div id="body">
-		<p>The page you are looking at is being generated dynamically by CodeIgniter.</p>
-
-		<p>If you would like to edit this page you'll find it located at:</p>
-		<code>application/views/welcome_message.php</code>
-
-		<p>The corresponding controller for this page is found at:</p>
-		<code>application/controllers/welcome.php</code>
-
-		<p>If you are exploring CodeIgniter for the very first time, you should start by reading the <a href="user_guide/">User Guide</a>.</p>
+		<div id="authWrap">
+			<div class="login">
+				<form method="post" action="<?php echo base_url()."index.php/welcome/addUserInfo";?>">
+					<label class="uid">User Id: </label><label><input type="text" name="userId" value="" /></label><br />
+					<label class="pwd">Password: </label><label><input type="password" name="userPwd" value="" /></label>
+					<br />
+					<input type="submit" value="Login" />
+				</form>
+			</div>
+		</div>
 	</div>
 
 	<p class="footer">Page rendered in <strong>{elapsed_time}</strong> seconds</p>
