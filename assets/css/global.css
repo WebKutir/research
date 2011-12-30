@@ -54,7 +54,23 @@
     text-align: center;
     word-wrap: break-word;
   }
-
+  
+  #member_list{
+	 padding: 5px;
+	 overflow-x: hidden;
+	 overflow-y: auto;
+	 border-bottom: 1px solid #D0D0D0;
+	 line-height: 20px;
+	 height: 125px;
+  }
+  
+  .members{
+	background-color: #DFDFDF;
+	display: block;
+	margin-top: 5px;  
+	cursor: pointer;
+  }
+	
   h1 {
     color: #444;
     background-color: transparent;

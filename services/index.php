@@ -71,7 +71,7 @@ $app = new Slim();
 
 //GET route
 $app->get('/:folder/:file', function ($folder, $file)  use ($app) {
-  include APPPATH."/service/".$folder."/".$file."_get.php";  
+  include THISPATH."/service/$folder/get_$file.php";  
 });
 
 //POST route

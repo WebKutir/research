@@ -28,17 +28,16 @@ class Pest {
     $this->base_url = $params["base_url"];
   }
   
-  public function get($url, $arr) {
+  public function get($url, $arr, $headers=array()) {
     $data = (is_array($arr)) ? http_build_query($arr) : $arr;
         
     $curl_opts = $this->curl_opts;
-    $curl_opts[CURLOPT_CUSTOMREQUEST] = 'POST';
+    $curl_opts[CURLOPT_CUSTOMREQUEST] = 'GET';
     $headers[] = 'Content-Length: '.strlen($data);
     $curl_opts[CURLOPT_HTTPHEADER] = $headers;
     $curl_opts[CURLOPT_POSTFIELDS] = $data;
-      	
-    $curl = $this->prepRequest($this->curl_opts, $url);
- 
+    
+    $curl = $this->prepRequest($curl_opts, $url);
     $body = $this->doRequest($curl);
     
     $body = $this->processBody($body);
