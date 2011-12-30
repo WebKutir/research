@@ -1,4 +1,37 @@
 <?php
+/*-----------------
+  Config Items
+-------------------*/
+//BASE URL
+if (isset($_SERVER['HTTP_HOST'])){
+  $base_url = isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) !== 'off' ? 'https' : 'http';
+	$base_url .= '://'. $_SERVER['HTTP_HOST'];
+	$base_url .= str_replace(basename($_SERVER['SCRIPT_NAME']), '', $_SERVER['SCRIPT_NAME']);
+}else{
+  $base_url = 'http://localhost/';
+}
+define("BASE_URL",$base_url);
+
+//APPPATH
+define("THISPATH",dirname(__FILE__));
+/*-------------------*/
+
+/*-----------------
+  Helper Functions
+-------------------*/
+function loadDependencies($deps){
+  foreach ($deps as $d){
+    $d=str_replace("\\","/",$d);
+    if(substr($d,0,1)!="/"){
+      $d="/$d";
+    }
+    if(file_exists(THISPATH.$d)){
+      require_once(THISPATH.$d);
+    }
+  }
+}
+
+/*-------------------*/
 
 /**
  * Step 1: Require the Slim PHP 5 Framework
@@ -8,7 +41,7 @@
  * directory elsewhere, ensure that it is added to your include path
  * or update this file path as needed.
  */
-require 'Slim/Slim.php';
+require THISPATH . '/Slim/Slim.php';
 
 /**
  * Step 2: Instantiate the Slim application
@@ -37,7 +70,7 @@ $app = new Slim();
  */
 
 //GET route
-$app->get('/', function () {
+$app->get('/member/:id', function ($id) {
     $template = <<<EOT
 <!DOCTYPE html>
     <html>
