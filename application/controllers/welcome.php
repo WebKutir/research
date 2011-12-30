@@ -2,24 +2,42 @@
 
 class Welcome extends CI_Controller {
 
-	/**
-	 * Index Page for this controller.
-	 *
-	 * Maps to the following URL
-	 * 		http://example.com/index.php/welcome
-	 *	- or -  
-	 * 		http://example.com/index.php/welcome/index
-	 *	- or -
-	 * Since this controller is set as the default controller in 
-	 * config/routes.php, it's displayed at http://example.com/
-	 *
-	 * So any other public methods not prefixed with an underscore will
-	 * map to /index.php/welcome/<method_name>
-	 * @see http://codeigniter.com/user_guide/general/urls.html
-	 */
+	public function __construct(){
+    parent::__construct();
+    $this->load->model("rnd_model","rndM");
+  }
+	
 	public function index()
 	{
+		/*$ar = array(
+				"name" => "Pijus Kumar Sarker",
+				"email" => "pijus@nibssolution",
+				"userId" => "pijus",
+				"pwd" => "123456"
+		);*/
+		
+		/*$data = array(
+				"w_m"=>$this->rndM->getReq("Pijus.Kumar"),
+				"w_m2"=>$this->rndM->getReq2("Pijus.Sarker"),
+				);*/
+		//echo $this->rndM->getReq("Pijus");
 		$this->load->view('welcome_message');
+		
+		//$uinfo = $this->rndM->getUserInfo(2);
+		//print_r($uinfo);
+		
+		
+	}
+	public function getUser($id){
+		$uinfo = $this->rndM->getUserInfo($id);
+		print_r($uinfo);
+	}
+	public function addUserInfo(){
+		$data = array(
+				"userid" => $this->input->post("userId"),
+				"password" => $this->input->post("userPwd")
+		);
+		$this->rndM->insertuser($data);
 	}
 }
 

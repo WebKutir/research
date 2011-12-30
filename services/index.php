@@ -8,8 +8,44 @@
  * directory elsewhere, ensure that it is added to your include path
  * or update this file path as needed.
  */
-require 'Slim/Slim.php';
+/*require 'Slim/Slim.php';*/
 
+/*-----------------
+  Config Items
+-------------------*/
+//BASE URL
+if (isset($_SERVER['HTTP_HOST'])){
+  $base_url = isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) !== 'off' ? 'https' : 'http';
+	$base_url .= '://'. $_SERVER['HTTP_HOST'];
+	$base_url .= str_replace(basename($_SERVER['SCRIPT_NAME']), '', $_SERVER['SCRIPT_NAME']);
+}else{
+  $base_url = 'http://localhost/';
+}
+define("BASE_URL",$base_url);
+
+//APPPATH
+define("APPPATH",dirname(__FILE__));
+/*-------------------*/
+
+/*-----------------
+  Helper Functions
+-------------------*/
+function loadDependencies($deps){
+  foreach ($deps as $d){
+    $d=str_replace("\\","/",$d);
+    if(substr($d,0,1)!="/"){
+      $d="/$d";
+    }
+    if(file_exists(APPPATH.$d)){
+      require_once(APPPATH.$d);
+    }
+  }
+}
+
+/*-------------------*/
+
+#require the slim framework
+require APPPATH.'/slim/Slim.php';
 /**
  * Step 2: Instantiate the Slim application
  *
@@ -36,8 +72,12 @@ $app = new Slim();
  * The routes below work with PHP >= 5.3.
  */
 
+#include required services
+require APPPATH.'/service/login_service.php';
+
+
 //GET route
-$app->get('/', function () {
+/*$app->get('/', function () {
     $template = <<<EOT
 <!DOCTYPE html>
     <html>
@@ -155,6 +195,26 @@ $app->delete('/delete', function () {
     echo 'This is a DELETE route';
 });
 
+$app->get('/hi/:name', function ($name) {
+	$data = array(
+			"0"=>"Welcome ",
+			"1"=>"  ",
+			"2"=> "MR. ".strtoupper($name)
+			);
+	echo json_encode($data);
+   // echo 'Hi Pijus';
+});
+$app->get('/hi/req/:name', function ($name) {
+	$data = array(
+			"0"=>"HI,",
+			"1"=>"  ",
+			"2"=> "MR. ".strtoupper($name)
+			);
+	echo json_encode($data);
+   // echo 'Hi Pijus';
+});
+$app->get('/hello/:name', 'myFunction');
+function myFunction($name) { echo "Hello, $name"; }
 /**
  * Step 4: Run the Slim application
  *
