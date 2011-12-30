@@ -8,8 +8,20 @@ class Auth extends CI_Controller {
 
 	public function index()
 	{
-		$this->load->model('auth_m', 'auth');
-		echo $this->auth->getMember(array('user_name'=>$this->input->post('user_name')),true,true);
+		$data = array(
+			'folder'			=> 'auth',
+			'file'				=> 'auth',
+			'params'			=> array(
+				'user_name'		=> $this->input->post('user_name'),
+				'password'		=> $this->input->post('pwd')
+			)
+		);
+		$password = $this->data_model->getItem($data,true,true);
+		if($password==$this->input->post('pwd')){
+			$this->load->view('add_member');
+		}else{
+			$this->load->view('auth_fail');
+		}
 	}
 }
 

@@ -23,13 +23,25 @@
 						<input type="submit" value="Submit" />
 					</form>
 				</div>
+				<div class="log">
+					User Name and/or Password did not match/found in the system.
+				</div>
 			</div>
-			<p class="footer">Page rendered in <strong>{elapsed_time}</strong> seconds</p>
-		</div>
 <script language="javascript">
 $(document).ready(function(){
-	$("#user_name").focus();
+	var self = $(this);
+	self.el = self.find("#user_name");
+	self.el.focus();
+	self.el.keyup(function(){
+		if(self.el.val()==""){
+			self.find(".log").show("slow");
+		}else{
+			self.find(".log").hide("slow");
+		}
+	});
 });
 </script>
+			<p class="footer">Page rendered in <strong>{elapsed_time}</strong> seconds</p>
+		</div>
 	</body>
 </html>

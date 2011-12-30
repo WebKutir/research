@@ -17,11 +17,13 @@ class MY_Model extends CI_Model{
    * @return JSON / PHP Array
    * @author Khaled
    */
-	function get($path,$arr,$assoc=true,$raw=false){
+	function get($arr,$assoc=true,$raw=false){
+		$this->endpoint = '/'.$arr['folder'].'/';
+		$path = $arr['file'];
 		if($raw){
-		  return $this->pest->get($this->endpoint.$path,$arr);
+		  return $this->pest->get($this->endpoint.$path,(isset($arr['params']) ? $arr['params'] : ''));
 		}else{
-		  return json_decode($this->pest->get($this->endpoint.$path,$arr),$assoc);
+		  return json_decode($this->pest->get($this->endpoint.$path,(isset($arr['params']) ? $arr['params'] : '')),$assoc);
 		}
 	}
 
