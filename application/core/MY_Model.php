@@ -4,20 +4,18 @@ class MY_Model extends CI_Model{
 
 	function __construct(){
 		parent::__construct();
-		$this->endpoint="/";
-
 	}
 
   /**
    * Perform Get request using Pest
    *
-   * @param string $path - path to service
-   * @param boolean $assoc - whether the JSON decoded object should be associative
+   * @param array $arr - path & params of the service
    * @param boolean $raw - determines whether it returns JSON or a decoded PHP array
+   * @param boolean $assoc - whether the JSON decoded object should be associative
    * @return JSON / PHP Array
-   * @author Khaled
+   * @author Tareq Modified Khaled's Module
    */
-	function get($arr,$assoc=true,$raw=false){
+	function get($arr,$raw=true,$assoc=false){
 		$this->endpoint = '/'.$arr['folder'].'/';
 		$path = $arr['file'];
 		if($raw){
@@ -30,15 +28,16 @@ class MY_Model extends CI_Model{
   /**
    * Perform Post request using Pest
    *
-   * @param string $path - path to service
-   * @param array $data - an associative array to be posted to the service
+   * @param array $arr - path & params of the service
    * @return last_insert_id / false
-   * @author Khaled
+   * @author Tareq Modified Khaled's Module
    */
-	function post($path,$data){
-	  $res=json_decode($this->pest->post($this->endpoint.$path,$data),true);
+	function post($arr){
+		$this->endpoint = '/'.$arr['folder'].'/';
+		$path = $arr['file'];
+	  $res=json_decode($this->pest->post($this->endpoint.$path,$arr['params']),true);
 	  if(isset($res["success"]) && $res["success"]==true){
-	    return $res["id"];
+	    return (isset($res["return"]) ? $res['return'] : 0);
 	  }
 	  return false;
 	}
@@ -46,13 +45,14 @@ class MY_Model extends CI_Model{
 	/**
    * Perform Put request using Pest
    *
-   * @param string $path - path to service
-   * @param array $data - an associative array to be put to the service
+   * @param array $arr - path & params of the service
    * @return Boolean
-   * @author Khaled
+   * @author Tareq Modified Khaled's Module
    */
-	function put($path,$data){
-	  $res=json_decode($this->pest->put($this->endpoint.$path,$data),true);
+	function put($arr){
+		$this->endpoint = '/'.$arr['folder'].'/';
+		$path = $arr['file'];
+		$res=json_decode($this->pest->put($this->endpoint.$path,$arr['params']),true);
 	  if(isset($res["success"]) && $res["success"]==true){
 	    return $res["success"];
 	  }
@@ -62,16 +62,18 @@ class MY_Model extends CI_Model{
 	/**
    * Perform Delete request using Pest
    *
-   * @param string $path - path to service
+   * @param array $arr - path & params of the service
    * @return Boolean
-   * @author Khaled
+   * @author Tareq Modified Khaled's Module
    */
-	function delete($path){
-	  $res=json_decode($this->pest->delete($this->endpoint.$path),true);
+	function delete($arr){
+		$this->endpoint = '/'.$arr['folder'].'/';
+		$path = $arr['file'];
+		$res=json_decode($this->pest->delete($this->endpoint.$path,$arr['params']),true);
 	  if(isset($res["success"]) && $res["success"]==true){
 	    return $res["success"];
 	  }
-	  return false;
+		return false;
 	}
 
 }

@@ -79,9 +79,14 @@ class Pest {
     return $body;
   }
   
-  public function delete($url) {
+  public function delete($url, $data, $headers=array()) {
+    $data = (is_array($data)) ? http_build_query($data) : $data; 
+    
     $curl_opts = $this->curl_opts;
-    $curl_opts[CURLOPT_CUSTOMREQUEST] = 'DELETE';
+  	$curl_opts[CURLOPT_CUSTOMREQUEST] = 'DELETE';
+    $headers[] = 'Content-Length: '.strlen($data);
+    $curl_opts[CURLOPT_HTTPHEADER] = $headers;
+    $curl_opts[CURLOPT_POSTFIELDS] = $data;
     
     $curl = $this->prepRequest($curl_opts, $url);
     $body = $this->doRequest($curl);

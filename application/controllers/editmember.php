@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Addmember extends CI_Controller {
+class Editmember extends CI_Controller {
 
 	function __construct(){
 		parent::__construct();
@@ -10,24 +10,23 @@ class Addmember extends CI_Controller {
 	{
 		$data = array(
 			'folder'				=> 'member',
-			'file'					=> 'new_member',
+			'file'					=> 'member_info',
 			'params'				=> array(
 					'user_name'	=> $this->input->post('user_name'),
 					'pwd'				=> $this->input->post('pwd'),
 					're_pwd'		=> $this->input->post('re_pwd')
 			)
 		);
-		$result = $this->data_model->insertItem($data);
+		$result = $this->data_model->updateItem($data);
 		
-		if($result===false){
+		if($result==false){
 			$retval['result'] = 'fail';
 		}else{
 			$retval['result'] = 'success';
-			$retval['id'] = $result;
 		}
 		echo json_encode($retval);
 	}
 }
 
-/* End of file addmember.php */
-/* Location: ./application/controllers/addmember.php */
+/* End of file editmember.php */
+/* Location: ./application/controllers/editmember.php */

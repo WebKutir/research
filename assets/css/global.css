@@ -2,6 +2,10 @@
   ::moz-selection{ background-color: #E13300; color: white; }
   ::webkit-selection{ background-color: #E13300; color: white; }
 
+	html.busy, html.busy * {  
+	  cursor: wait !important;  
+	}
+
   body {
     background-color: #fff;
     margin: 40px;
@@ -55,20 +59,31 @@
     word-wrap: break-word;
   }
   
+  .success_log{
+    border: 1px solid #D0FFD0 !important;
+  }
+
   #member_list{
-	 padding: 5px;
+	 padding: 0 5px 0 5px;
 	 overflow-x: hidden;
 	 overflow-y: auto;
 	 border-bottom: 1px solid #D0D0D0;
 	 line-height: 20px;
-	 height: 125px;
+	 height: 175px;
   }
   
   .members{
-	background-color: #DFDFDF;
-	display: block;
-	margin-top: 5px;  
-	cursor: pointer;
+		background-color: #DFDFDF;
+		display: block;
+		margin-bottom: 5px;  
+		cursor: pointer;
+		padding: 5px;
+  }
+  
+  .members:hover{
+    background-color: #AFAFAF;
+    font-weight: bold;
+    color: #FFFFFF;
   }
 	
   h1 {

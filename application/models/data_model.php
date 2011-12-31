@@ -2,23 +2,37 @@
 
 class Data_model extends MY_Model{
 	
-	public function __construct(){
-		$this->endpoint="/auth/";
-	}
-
-  function getItem($arr,$assoc=true,$raw=false){
-    return $this->get($arr,$assoc,$raw);
+  /**
+   * @param array $arr - path & params of the service
+   * @param boolean $raw - determines whether it returns JSON or a decoded PHP array
+   * @param boolean $assoc - whether the JSON decoded object should be associative
+   * @return JSON / PHP Array
+   */
+	function getItem($arr,$raw=false,$assoc=true){
+    return $this->get($arr,$raw,$assoc);
   }
   
-  function addUser($arr){
-		return $this->post('member', $arr);
+  /**
+   * @param array $arr - path & params of the service
+   * @return last_insert_id / false
+   */
+  function insertItem($arr){
+		return $this->post($arr);
 	}
 
-	function saveUser($id,$arr){
-	  return $this->put('member/'.$id, $arr);
+	/**
+   * @param array $arr - path & params of the service
+   * @return Boolean
+   */
+	function updateItem($arr){
+	  return $this->put($arr);
 	}
 
-	function deleteUser($id){
-		return $this->delete('member/'.$id);
+	/**
+   * @param array $arr - path & params of the service
+   * @return Boolean
+   */
+		function deleteItem($arr){
+		return $this->delete($arr);
 	}
 }
