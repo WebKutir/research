@@ -39,25 +39,25 @@ $app = new Slim();
 
 $app->get('/:folder/:file', function ($folder, $file)  use ($app) {
 	$req =  $app->request();
-  include THISPATH."/service/$folder/get_$file.php";  
+  include THISPATH."/route/$folder/get_$file.php";  
   echo json_encode($retval);
 });
 
 $app->post('/:folder/:file', function ($folder, $file) use($app) {
 	$req =  $app->request();
-	include THISPATH."/service/$folder/insert_$file.php";
+	include THISPATH."/route/$folder/insert_$file.php";
 	echo json_encode($retval);
 });
 
 $app->put('/:folder/:file', function ($folder, $file) use($app) {
 	$req =  $app->request();
-  include THISPATH."/service/$folder/update_$file.php";
+  include THISPATH."/route/$folder/update_$file.php";
   echo json_encode($retval);
 });
 
 $app->delete('/:folder/:file', function ($folder, $file) use($app) {
 	$req =  $app->request();
-  include THISPATH."/service/$folder/delete_$file.php";
+  include THISPATH."/route/$folder/delete_$file.php";
   echo json_encode($retval);
 });
 
