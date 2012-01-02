@@ -19,12 +19,14 @@ class Addmember extends CI_Controller {
 		);
 		$result = $this->data_model->insertItem($data);
 		
-		if($result===false){
-			$retval['result'] = 'fail';
-		}else{
+		if($result==true){
 			$retval['result'] = 'success';
 			$retval['id'] = $result;
+		}else{
+			$retval['result'] = 'fail';
+			$retval['message'] = $result;
 		}
+		
 		echo json_encode($retval);
 	}
 }

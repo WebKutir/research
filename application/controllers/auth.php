@@ -17,11 +17,12 @@ class Auth extends CI_Controller {
 			)
 		);
 		//If you pass (<>, true, true) then you will get JSON else an Array
-		$val = $this->data_model->getItem($data);
-		if($val['password']==$this->input->post('pwd')){
-			$this->load->view('crud_member');
-		}else{
+		$result = $this->data_model->getItem($data);
+//var_dump($result);
+		if(!is_array($result) && $result==false){
 			$this->load->view('auth_fail');
+		}else{
+			$this->load->view('crud_member');
 		}
 	}
 }

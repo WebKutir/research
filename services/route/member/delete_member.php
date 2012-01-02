@@ -1,2 +1,0 @@
-<?php
-$retval['success'] = true;

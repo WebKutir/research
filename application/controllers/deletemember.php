@@ -17,10 +17,11 @@ class Deletemember extends CI_Controller {
 		);
 		$result = $this->data_model->deleteItem($data);
 		
-		if($result==false){
-			$retval['result'] = 'fail';
-		}else{
+		if($result==true){
 			$retval['result'] = 'success';
+		}else{
+			$retval['result'] = 'fail';
+			$retval['message'] = $result;
 		}
 		
 		echo json_encode($retval);

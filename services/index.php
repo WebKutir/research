@@ -16,64 +16,49 @@ define("BASE_URL",$base_url);
 define("THISPATH",dirname(__FILE__));
 /*-------------------*/
 
-/*-----------------
-  Helper Functions
--------------------*/
-function loadEntities($deps){
-  foreach ($deps as $d){
-    $d=str_replace("\\","/",$d);
-    if(substr($d,0,1)!="/"){
-      $d="/$d";
-    }
-	$d="/entity".$d.".php";
-    if(file_exists(THISPATH.$d)){
-      require_once(THISPATH.$d);
-    }
-  }
-}
-
-/*-------------------*/
-require THISPATH . "/orm/DoctrineConfig.php";
-$em = DoctrineConfig::getEntityManager();
-
+require_once THISPATH . "/orm/DoctrineConfig.php";
 require THISPATH . '/Slim/Slim.php';
 
 $app = new Slim();
 
-$app->get('/:folder/:file', function ($folder, $file)  use ($app) {
+$app->get('/getItem/:folder/:file', function ($folder, $file)  use ($app) {
   $req =  $app->request();
   try{
-	include THISPATH."/route/$folder/get_$file.php";
-	echo json_encode($retval);
+		$em = DoctrineConfig::getEntityManager();
+	  require THISPATH."/routes/$folder/get_$file.php";
+		echo json_encode($retval);
   }catch(Exception $ex){
 	echo json_encode(array('success'=>false, 'message'=>$ex->getMessage()));
   }
 });
 
-$app->post('/:folder/:file', function ($folder, $file) use($app) {
+$app->post('/insertItem/:folder/:file', function ($folder, $file) use($app) {
 	$req =  $app->request();
 	try{
-		include THISPATH."/route/$folder/insert_$file.php";
+		$em = DoctrineConfig::getEntityManager();
+		require THISPATH."/routes/$folder/insert_$file.php";
 		echo json_encode($retval);
 	}catch(Exception $ex){
 		echo json_encode(array('success'=>false, 'message'=>$ex->getMessage()));
 	}
 });
 
-$app->put('/:folder/:file', function ($folder, $file) use($app) {
+$app->put('/updateItem/:folder/:file', function ($folder, $file) use($app) {
 	$req =  $app->request();
 	try{
-		include THISPATH."/route/$folder/update_$file.php";
+		$em = DoctrineConfig::getEntityManager();
+		require THISPATH."/routes/$folder/update_$file.php";
 		echo json_encode($retval);
 	}catch(Exception $ex){
 		echo json_encode(array('success'=>false, 'message'=>$ex->getMessage()));
 	}
 });
 
-$app->delete('/:folder/:file', function ($folder, $file) use($app) {
+$app->delete('/deleteItem/:folder/:file', function ($folder, $file) use($app) {
 	$req =  $app->request();
 	try{
-		include THISPATH."/route/$folder/delete_$file.php";
+		$em = DoctrineConfig::getEntityManager();
+		require THISPATH."/routes/$folder/delete_$file.php";
 		echo json_encode($retval);
 	}catch(Exception $ex){
 		echo json_encode(array('success'=>false, 'message'=>$ex->getMessage()));

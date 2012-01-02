@@ -17,9 +17,12 @@
 						'folder'			=> 'member',
 						'file'				=> 'member_list'
 					);
-					foreach($this->data_model->getItem($data) as $member_name){ ?>
-						<div class="members"><?=$member_name;?></div>
-        <?php } ?>
+					$memberArr = $this->data_model->getItem($data);
+					foreach($memberArr as $member_name){ 
+						foreach($member_name as $names){
+					?>
+						<div class="members"><?=$names['memberName'];?></div>
+        <?php }} ?>
 				</div>
 			</div>
       <div style="clear: both"></div>
@@ -91,7 +94,7 @@ function deleteMember(_this){
 				self.find('.log').addClass('success_log').html('Data is Deleted Successfully.').slideDown(300).delay(3200).slideUp(300);
 				_this.hide("slow");
 			}else{
-				self.find('.log').removeClass('success_log').html('Data is not Deleted. Please try later.').slideDown(300).delay(3200).slideUp(300);
+				self.find('.log').removeClass('success_log').html(data.message).slideDown(300).delay(3200).slideUp(300);
 			}
 			self.find("#user_name").val("");
 			self.find("#pwd").val("");
@@ -139,7 +142,7 @@ $(document).ready(function(){
 					self.find(".members").bind('click',function(e){clickFunction($(this), e);});
 					self.find('.log').addClass('success_log').html('Member Add Successfull.').slideDown(300).delay(3200).slideUp(300);
 				}else{
-					self.find('.log').removeClass('success_log').html('Data is not Added. Please try later.').slideDown(300).delay(3200).slideUp(300);
+					self.find('.log').removeClass('success_log').html(data.message).slideDown(300).delay(3200).slideUp(300);
 				}
 				self.find("#user_name").val("");
 				self.find("#pwd").val("");
@@ -165,7 +168,7 @@ $(document).ready(function(){
 					self.find(".members").bind('click',function(e){clickFunction($(this), e);});
 					self.find('.log').addClass('success_log').html('Member Edit Successfull.').slideDown(300).delay(3200).slideUp(300);
 				}else{
-					self.find('.log').removeClass('success_log').html('Data is not Edited. Please try later.').slideDown(300).delay(3200).slideUp(300);
+					self.find('.log').removeClass('success_log').html(data.message).slideDown(300).delay(3200).slideUp(300);
 				}
 				self.find("#user_name").val("");
 				self.find("#pwd").val("");

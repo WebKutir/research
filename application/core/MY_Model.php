@@ -15,8 +15,8 @@ class MY_Model extends CI_Model{
    * @return JSON / PHP Array
    * @author Tareq Modified Khaled's Module
    */
-	function get($arr,$raw=true,$assoc=false){
-		$this->endpoint = '/'.$arr['folder'].'/';
+	function get($arr,$raw=false,$assoc=true){
+		$this->endpoint = '/getItem/'.$arr['folder'].'/';
 		$path = $arr['file'];
 		if($raw){
 		  return $this->pest->get($this->endpoint.$path,(isset($arr['params']) ? $arr['params'] : ''));
@@ -33,13 +33,13 @@ class MY_Model extends CI_Model{
    * @author Tareq Modified Khaled's Module
    */
 	function post($arr){
-		$this->endpoint = '/'.$arr['folder'].'/';
+		$this->endpoint = '/insertItem/'.$arr['folder'].'/';
 		$path = $arr['file'];
 	  $res=json_decode($this->pest->post($this->endpoint.$path,$arr['params']),true);
 	  if(isset($res["success"]) && $res["success"]==true){
 	    return (isset($res["return"]) ? $res['return'] : 0);
 	  }
-	  return false;
+	  return $res['message'];
 	}
 
 	/**
@@ -50,13 +50,13 @@ class MY_Model extends CI_Model{
    * @author Tareq Modified Khaled's Module
    */
 	function put($arr){
-		$this->endpoint = '/'.$arr['folder'].'/';
+		$this->endpoint = '/updateItem/'.$arr['folder'].'/';
 		$path = $arr['file'];
 		$res=json_decode($this->pest->put($this->endpoint.$path,$arr['params']),true);
 	  if(isset($res["success"]) && $res["success"]==true){
 	    return $res["success"];
 	  }
-	  return false;
+	  return $res['message'];
 	}
 
 	/**
@@ -67,13 +67,13 @@ class MY_Model extends CI_Model{
    * @author Tareq Modified Khaled's Module
    */
 	function delete($arr){
-		$this->endpoint = '/'.$arr['folder'].'/';
+		$this->endpoint = '/deleteItem/'.$arr['folder'].'/';
 		$path = $arr['file'];
 		$res=json_decode($this->pest->delete($this->endpoint.$path,$arr['params']),true);
 	  if(isset($res["success"]) && $res["success"]==true){
 	    return $res["success"];
 	  }
-		return false;
+		return $res['message'];
 	}
 
 }
