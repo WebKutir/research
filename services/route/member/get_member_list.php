@@ -1,7 +1,8 @@
 <?php
-$retval[] = 'Tareq';
-$retval[] = 'Arif';
-$retval[] = 'Pijus';
-$retval[] = 'Jamal';
-$retval[] = 'Khaled';
-$retval[] = 'Lenin';
+$entities=array(
+  "Member"
+);
+loadEntities($entities);
+
+$query = $em->createQuery(" SELECT m FROM \entity\Member m ");
+$retval = $query->getArrayResult();

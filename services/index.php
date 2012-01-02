@@ -19,12 +19,13 @@ define("THISPATH",dirname(__FILE__));
 /*-----------------
   Helper Functions
 -------------------*/
-function loadDependencies($deps){
+function loadEntities($deps){
   foreach ($deps as $d){
     $d=str_replace("\\","/",$d);
     if(substr($d,0,1)!="/"){
       $d="/$d";
     }
+	$d="/entity".$d.".php";
     if(file_exists(THISPATH.$d)){
       require_once(THISPATH.$d);
     }
@@ -32,33 +33,51 @@ function loadDependencies($deps){
 }
 
 /*-------------------*/
+require THISPATH . "/orm/DoctrineConfig.php";
+$em = DoctrineConfig::getEntityManager();
 
 require THISPATH . '/Slim/Slim.php';
 
 $app = new Slim();
 
 $app->get('/:folder/:file', function ($folder, $file)  use ($app) {
-	$req =  $app->request();
-  include THISPATH."/route/$folder/get_$file.php";  
-  echo json_encode($retval);
+  $req =  $app->request();
+  try{
+	include THISPATH."/route/$folder/get_$file.php";
+	echo json_encode($retval);
+  }catch(Exception $ex){
+	echo json_encode(array('success'=>false, 'message'=>$ex->getMessage()));
+  }
 });
 
 $app->post('/:folder/:file', function ($folder, $file) use($app) {
 	$req =  $app->request();
-	include THISPATH."/route/$folder/insert_$file.php";
-	echo json_encode($retval);
+	try{
+		include THISPATH."/route/$folder/insert_$file.php";
+		echo json_encode($retval);
+	}catch(Exception $ex){
+		echo json_encode(array('success'=>false, 'message'=>$ex->getMessage()));
+	}
 });
 
 $app->put('/:folder/:file', function ($folder, $file) use($app) {
 	$req =  $app->request();
-  include THISPATH."/route/$folder/update_$file.php";
-  echo json_encode($retval);
+	try{
+		include THISPATH."/route/$folder/update_$file.php";
+		echo json_encode($retval);
+	}catch(Exception $ex){
+		echo json_encode(array('success'=>false, 'message'=>$ex->getMessage()));
+	}
 });
 
 $app->delete('/:folder/:file', function ($folder, $file) use($app) {
 	$req =  $app->request();
-  include THISPATH."/route/$folder/delete_$file.php";
-  echo json_encode($retval);
+	try{
+		include THISPATH."/route/$folder/delete_$file.php";
+		echo json_encode($retval);
+	}catch(Exception $ex){
+		echo json_encode(array('success'=>false, 'message'=>$ex->getMessage()));
+	}
 });
 
 $app->run();
