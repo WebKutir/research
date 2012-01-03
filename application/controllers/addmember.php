@@ -8,15 +8,13 @@ class Addmember extends CI_Controller {
 
 	public function index()
 	{
+		$params = $this->input->post();
 		$data = array(
 			'folder'				=> 'member',
 			'file'					=> 'new_member',
-			'params'				=> array(
-					'user_name'	=> $this->input->post('user_name'),
-					'pwd'				=> $this->input->post('pwd'),
-					're_pwd'		=> $this->input->post('re_pwd')
-			)
+			'params'				=> $params
 		);
+//var_dump($_POST);
 		$result = $this->data_model->insertItem($data);
 		
 		if(is_array($result)){
@@ -26,7 +24,6 @@ class Addmember extends CI_Controller {
 			$retval['result'] = 'fail';
 			$retval['message'] = $result;
 		}
-		
 		echo json_encode($retval);
 	}
 }

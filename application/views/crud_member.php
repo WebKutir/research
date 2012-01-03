@@ -32,17 +32,17 @@
 					<form id="frm_data">
 						<div class="info">User Name</div>
 						<div class="colon">:</div>
-						<input type="text" name="user_name" id="user_name" />
+						<input type="text" name="memberName" id="user_name" />
 						<div style="clear: both"></div>
 						<div class="info">Password</div>
 						<div class="colon">:</div>
-						<input type="password" name="pwd" id="pwd" />
+						<input type="password" name="password" id="pwd" />
 						<div style="clear: both"></div>
 						<div class="info">Re-Password</div>
 						<div class="colon">:</div>
 						<input type="password" name="re_pwd" id="re_pwd" />
 						<div style="clear: both"></div>
-						<input type="hidden" name="user_id" id="user_id" />
+						<input type="hidden" name="id" id="user_id" />
 					</form>
 					<input type="submit" id="add" value="Add" style="margin: 10px 0 0 236px !important;" />
           <input type="submit" id="update" value="Update" style="display: none;" />

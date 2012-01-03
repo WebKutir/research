@@ -8,15 +8,11 @@ class Editmember extends CI_Controller {
 
 	public function index()
 	{
+		$params = $this->input->post();
 		$data = array(
 			'folder'				=> 'member',
 			'file'					=> 'member_info',
-			'params'				=> array(
-					'id'				=> $this->input->post('user_id'),
-					'user_name'	=> $this->input->post('user_name'),
-					'pwd'				=> $this->input->post('pwd'),
-					're_pwd'		=> $this->input->post('re_pwd')
-			)
+			'params'				=> $params
 		);
 		$result = $this->data_model->updateItem($data);
 		if($result===true){

@@ -1,16 +1,19 @@
 <?php
-if($req->params('pwd')!=$req->params('re_pwd')){
+if($req->params('password')!=$req->params('re_pwd')){
 	$retval['success'] = false;
 	$retval['message'] = 'Passwords did not Matched!!!';
 }else{
 	$id = $req->params('id');
-	$user_name = $req->params('user_name');
-	$password = $req->params('pwd');
-	
 	$member = $em->find('Entities\Member', $id);
- 	$member->setMemberName($user_name);
- 	$member->setPassword($password);
-
+	
+	$put= $req->put();
+  foreach($put as $k=>$v){
+    $capitalized=ucfirst($k);
+    if(is_callable(array($member,"set".$capitalized))){
+    	$member->{"set".$capitalized}($v);
+    }
+  }
+	
  	$em->persist($member);
   $em->flush();
 	
