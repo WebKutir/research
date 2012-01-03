@@ -1,14 +1,9 @@
 <?php
-$user_name = $req->params('user_name');
+$id = $req->params('id');
 	
-$members = $em->findAll('Entities\Member');
+$member = $em->find('Entities\Member', $id);
 
-foreach($members as $member){
-	if($member->memberName==$user_name){
-		$em->remove($member);
-		$em->flush();
-		break;
-	}
-}
+$em->remove($member);
+$em->flush();
 	
 $retval['success'] = true;

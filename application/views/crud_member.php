@@ -21,7 +21,7 @@
 					foreach($memberArr as $member_name){ 
 						foreach($member_name as $names){
 					?>
-						<div class="members"><?=$names['memberName'];?></div>
+						<div class="members" rel="<?=$names['id'];?>"><?=$names['memberName'];?></div>
         <?php }} ?>
 				</div>
 			</div>
@@ -42,6 +42,7 @@
 						<div class="colon">:</div>
 						<input type="password" name="re_pwd" id="re_pwd" />
 						<div style="clear: both"></div>
+						<input type="hidden" name="user_id" id="user_id" />
 					</form>
 					<input type="submit" id="add" value="Add" style="margin: 10px 0 0 236px !important;" />
           <input type="submit" id="update" value="Update" style="display: none;" />
@@ -60,6 +61,7 @@ $(function(){
 
 function clickFunction(_this, e){
 	var self = $(document);
+	self.find("#user_id").val(_this.attr("rel"));
 	var answer = confirm("Are you sure, you want to Delete this member?");
 	if(answer==true){
 		deleteMember(_this);
@@ -79,7 +81,7 @@ function deleteMember(_this){
 		url: "<?php echo base_url();?>deletemember",
 		dataType: "json",
 		type: "POST",
-		data: "user_name="+_this.html(),
+		data: "id="+_this.attr("rel"),
 		success: function(data){
 			var self = $(document);
 			if(data.result=="success"){
@@ -92,7 +94,7 @@ function deleteMember(_this){
 				self.find("#cancel").hide(0);
 				self.find("#update").hide(0);
 				self.find('.log').addClass('success_log').html('Data is Deleted Successfully.').slideDown(300).delay(3200).slideUp(300);
-				_this.hide("slow");
+				_this.remove();
 			}else{
 				self.find('.log').removeClass('success_log').html(data.message).slideDown(300).delay(3200).slideUp(300);
 			}
@@ -116,9 +118,7 @@ $(document).ready(function(){
 	});
 
 	self.find("#cancel").click(function(e){
-		var existing_data = $("#member_list").html();
-		self.find("#member_list").html("<div class='members'>"+self.find("#user_name").val()+"</div>"+existing_data);
-		self.find(".members").bind('click',function(e){clickFunction($(this), e);});
+		self.find(".members").show(0);
 		self.find("#user_name").val("");
 		self.find("#pwd").val("");
 		self.find("#re_pwd").val("");
@@ -138,7 +138,7 @@ $(document).ready(function(){
 			success: function(data){
 				if(data.result=="success"){
 					var existing_data = $("#member_list").html();
-					self.find("#member_list").html("<div class='members'>"+self.find("#user_name").val()+"</div>"+existing_data);
+					self.find("#member_list").html("<div class='members' rel='"+data.id+"'>"+self.find("#user_name").val()+"</div>"+existing_data);
 					self.find(".members").bind('click',function(e){clickFunction($(this), e);});
 					self.find('.log').addClass('success_log').html('Member Add Successfull.').slideDown(300).delay(3200).slideUp(300);
 				}else{
@@ -163,11 +163,10 @@ $(document).ready(function(){
 			data: self.find("#frm_data").serialize(),
 			success: function(data){
 				if(data.result=="success"){
-					var existing_data = $("#member_list").html();
-					self.find("#member_list").html("<div class='members'>"+self.find("#user_name").val()+"</div>"+existing_data);
-					self.find(".members").bind('click',function(e){clickFunction($(this), e);});
+					self.find(".members[rel='"+self.find("#user_id").val()+"']").html(self.find("#user_name").val()).show(0);
 					self.find('.log').addClass('success_log').html('Member Edit Successfull.').slideDown(300).delay(3200).slideUp(300);
 				}else{
+					self.find(".members").show(0);
 					self.find('.log').removeClass('success_log').html(data.message).slideDown(300).delay(3200).slideUp(300);
 				}
 				self.find("#user_name").val("");

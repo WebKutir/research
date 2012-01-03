@@ -19,9 +19,9 @@ class Addmember extends CI_Controller {
 		);
 		$result = $this->data_model->insertItem($data);
 		
-		if($result==true){
+		if(is_array($result)){
 			$retval['result'] = 'success';
-			$retval['id'] = $result;
+			$retval['id'] = $result['id'];
 		}else{
 			$retval['result'] = 'fail';
 			$retval['message'] = $result;

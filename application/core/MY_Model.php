@@ -54,7 +54,7 @@ class MY_Model extends CI_Model{
 		$path = $arr['file'];
 		$res=json_decode($this->pest->put($this->endpoint.$path,$arr['params']),true);
 	  if(isset($res["success"]) && $res["success"]==true){
-	    return $res["success"];
+	    return $res['success'];
 	  }
 	  return $res['message'];
 	}
@@ -71,7 +71,7 @@ class MY_Model extends CI_Model{
 		$path = $arr['file'];
 		$res=json_decode($this->pest->delete($this->endpoint.$path,$arr['params']),true);
 	  if(isset($res["success"]) && $res["success"]==true){
-	    return $res["success"];
+	    return (isset($res["return"]) ? $res['return'] : $res['success']);
 	  }
 		return $res['message'];
 	}

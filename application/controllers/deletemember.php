@@ -12,7 +12,7 @@ class Deletemember extends CI_Controller {
 			'folder'				=> 'member',
 			'file'					=> 'member',
 			'params'				=> array(
-					'user_name'	=> $this->input->post('user_name')
+					'id'	=> $this->input->post('id')
 			)
 		);
 		$result = $this->data_model->deleteItem($data);

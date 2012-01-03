@@ -12,20 +12,19 @@ class Editmember extends CI_Controller {
 			'folder'				=> 'member',
 			'file'					=> 'member_info',
 			'params'				=> array(
+					'id'				=> $this->input->post('user_id'),
 					'user_name'	=> $this->input->post('user_name'),
 					'pwd'				=> $this->input->post('pwd'),
 					're_pwd'		=> $this->input->post('re_pwd')
 			)
 		);
 		$result = $this->data_model->updateItem($data);
-		
-		if($result==true){
+		if($result===true){
 			$retval['result'] = 'success';
 		}else{
 			$retval['result'] = 'fail';
 			$retval['message'] = $result;
 		}
-		
 		echo json_encode($retval);
 	}
 }
