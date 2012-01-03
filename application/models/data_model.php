@@ -14,7 +14,7 @@ class Data_model extends MY_Model{
   
   /**
    * @param array $arr - path & params of the service
-   * @return last_insert_id / false
+   * @return anything defined in $retval['return'] in route file / String failure message / Int zero(0) if not defined $retval['return']
    */
   function insertItem($arr){
 		return $this->post($arr);
@@ -22,7 +22,7 @@ class Data_model extends MY_Model{
 
 	/**
    * @param array $arr - path & params of the service
-   * @return Boolean
+   * @return Boolean (true) / String failure message
    */
 	function updateItem($arr){
 	  return $this->put($arr);
@@ -30,7 +30,7 @@ class Data_model extends MY_Model{
 
 	/**
    * @param array $arr - path & params of the service
-   * @return Boolean
+   * @return Boolean (true) / String failure message
    */
 		function deleteItem($arr){
 		return $this->delete($arr);

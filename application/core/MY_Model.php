@@ -29,7 +29,7 @@ class MY_Model extends CI_Model{
    * Perform Post request using Pest
    *
    * @param array $arr - path & params of the service
-   * @return last_insert_id / false
+   * @return anything defined in $retval['return'] in route file / String failure message / Int zero(0) if not defined $retval['return']
    * @author Tareq Modified Khaled's Module
    */
 	function post($arr){
@@ -46,7 +46,7 @@ class MY_Model extends CI_Model{
    * Perform Put request using Pest
    *
    * @param array $arr - path & params of the service
-   * @return Boolean
+   * @return Boolean (true) / String failure message
    * @author Tareq Modified Khaled's Module
    */
 	function put($arr){
@@ -63,7 +63,7 @@ class MY_Model extends CI_Model{
    * Perform Delete request using Pest
    *
    * @param array $arr - path & params of the service
-   * @return Boolean
+   * @return Boolean (true) / String failure message
    * @author Tareq Modified Khaled's Module
    */
 	function delete($arr){
@@ -71,7 +71,7 @@ class MY_Model extends CI_Model{
 		$path = $arr['file'];
 		$res=json_decode($this->pest->delete($this->endpoint.$path,$arr['params']),true);
 	  if(isset($res["success"]) && $res["success"]==true){
-	    return (isset($res["return"]) ? $res['return'] : $res['success']);
+	    return $res['success'];
 	  }
 		return $res['message'];
 	}
