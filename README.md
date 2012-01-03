@@ -19,7 +19,7 @@ You will have to make a Login Page using a **User Name** and a **Password**. If 
 **updateItem** & **deleteItem** will return **Boolean** (true) / **String** failure message  
 
 5. Data_model communicates with Slim Framework.
-6. Slim Framework has 4 **dynamic** routes. **Routes are autoloaded from `/routes` folder, no need to manually include the files later on**.  
+6. Slim Framework has 4 **dynamic** routes. **Routes are autoloaded from `/routes` folder, no need to manually include the files later on**. For the placement of the route files created by the developers please examine [this](https://github.com/Drubo/research/blob/master/application/controllers/auth.php) file's `$data` array and [this](https://github.com/Drubo/research/blob/master/services/index.php) file's any route.  
 
 **Slim & Doctrine Communication Process**  
 1. Slim Communicates with Doctrine using **EntityManager** feature of Doctrine.  
