@@ -2,8 +2,8 @@
 $query = $em->createQuery(" SELECT COUNT(m.id) FROM Entities\Member m ");
 $count = $query->getSingleScalarResult();
 if($count == 0){
-	$app->redirect('/insertItem/member/new_member');
-	$retval['success'] = false;
+	//$app->redirect('/insertItem/member/new_member');
+	$retval['success'] = true;
 }else{
 	$user_name = $req->params('user_name');
 	$password = $req->params('password');
